@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Routes, Redirect } from 'react-router-dom';
 
 import { Provider as AlertProvider } from 'react-alert';
@@ -16,48 +16,46 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import { loadUser } from '../actions/auth';
 
-// Alert options
+// Alert Options
 const alertOptions = {
-	timeout: 3000,
-	position: 'top center'
+  timeout: 3000,
+  position: 'top center',
 };
 
 class App extends Component {
-	componentDidMount() {
-		store.dispatch(loadUser());
-	}
-	render() {
-		return (
-			<Provider store={store}>
-				<AlertProvider template={AlertTemplate} {...alertOptions}>
-					<Router>
-						<Fragment>
-							<Header />
-							<Alerts />
-							<div className="container">
-								{/* <Dashboard /> */}
-								<Routes>
-									{/* <Route exact path="/" element={Dashboard} />
-									<Route exact path="/register" component={Register} />
-									<Route exact path="/login" component={Login} /> */}
-									<Route
-										path="/"
-										element={
-											<PrivateRoute>
-												<Dashboard />
-											</PrivateRoute>
-										}
-									/>
-									<Route path="/register" element={<Register />} />
-									<Route path="/login" element={<Login />} />
-								</Routes>
-							</div>
-						</Fragment>
-					</Router>
-				</AlertProvider>
-			</Provider>
-		);
-	}
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <Router>
+            <Fragment>
+              <Header />
+              <Alerts />
+              <div className="container">
+                <Routes>
+                 
+                  <Route
+                      path="/"
+                      element={
+                        <PrivateRoute>
+                          <Dashboard />
+                        </PrivateRoute>
+                      }
+                    />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                </Routes>
+              </div>
+            </Fragment>
+          </Router>
+        </AlertProvider>
+      </Provider>
+    );
+  }
 }
 
-ReactDom.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
